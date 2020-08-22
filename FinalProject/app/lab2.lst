@@ -1,0 +1,743 @@
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 1
+
+
+   1               		.file	"lab2.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	read_adc
+  10               		.type	read_adc, @function
+  11               	read_adc:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 369A      		sbi 38-32,6
+  15               	.L2:
+  16 0002 349B      		sbis 38-32,4
+  17 0004 00C0      		rjmp .L2
+  18 0006 24B1      		in r18,36-32
+  19 0008 45B1      		in r20,37-32
+  20 000a 942F      		mov r25,r20
+  21 000c 80E0      		ldi r24,lo8(0)
+  22 000e 30E0      		ldi r19,lo8(0)
+  23 0010 282B      		or r18,r24
+  24 0012 392B      		or r19,r25
+  25 0014 C901      		movw r24,r18
+  26               	/* epilogue start */
+  27 0016 0895      		ret
+  28               		.size	read_adc, .-read_adc
+  29               	.global	FndDisplayTask
+  30               		.type	FndDisplayTask, @function
+  31               	FndDisplayTask:
+  32 0018 2F92      		push r2
+  33 001a 3F92      		push r3
+  34 001c 4F92      		push r4
+  35 001e 5F92      		push r5
+  36 0020 6F92      		push r6
+  37 0022 7F92      		push r7
+  38 0024 8F92      		push r8
+  39 0026 9F92      		push r9
+  40 0028 AF92      		push r10
+  41 002a BF92      		push r11
+  42 002c CF92      		push r12
+  43 002e DF92      		push r13
+  44 0030 EF92      		push r14
+  45 0032 FF92      		push r15
+  46 0034 0F93      		push r16
+  47 0036 1F93      		push r17
+  48 0038 DF93      		push r29
+  49 003a CF93      		push r28
+  50 003c CDB7      		in r28,__SP_L__
+  51 003e DEB7      		in r29,__SP_H__
+  52 0040 6497      		sbiw r28,20
+  53 0042 0FB6      		in __tmp_reg__,__SREG__
+  54 0044 F894      		cli
+  55 0046 DEBF      		out __SP_H__,r29
+  56 0048 0FBE      		out __SREG__,__tmp_reg__
+  57 004a CDBF      		out __SP_L__,r28
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 2
+
+
+  58               	/* prologue: function */
+  59               	/* frame size = 20 */
+  60 004c 52E0      		ldi r21,lo8(2)
+  61 004e C52E      		mov r12,r21
+  62 0050 D12C      		mov r13,__zero_reg__
+  63 0052 CC0E      		add r12,r28
+  64 0054 DD1E      		adc r13,r29
+  65 0056 D601      		movw r26,r12
+  66 0058 E0E0      		ldi r30,lo8(C.14.1667)
+  67 005a F0E0      		ldi r31,hi8(C.14.1667)
+  68 005c 83E1      		ldi r24,lo8(19)
+  69               	.L7:
+  70 005e 0190      		ld r0,Z+
+  71 0060 0D92      		st X+,r0
+  72 0062 8150      		subi r24,lo8(-(-1))
+  73 0064 01F4      		brne .L7
+  74 0066 8FEF      		ldi r24,lo8(-1)
+  75 0068 84BB      		out 52-32,r24
+  76 006a 8FE0      		ldi r24,lo8(15)
+  77 006c 8093 6400 		sts 100,r24
+  78 0070 EA80      		ldd r14,Y+2
+  79 0072 3E01      		movw r6,r28
+  80 0074 0894      		sec
+  81 0076 611C      		adc r6,__zero_reg__
+  82 0078 711C      		adc r7,__zero_reg__
+  83 007a 48E0      		ldi r20,lo8(8)
+  84 007c 242E      		mov r2,r20
+  85 007e 30E4      		ldi r19,lo8(8000)
+  86 0080 832E      		mov r8,r19
+  87 0082 3FE1      		ldi r19,hi8(8000)
+  88 0084 932E      		mov r9,r19
+  89 0086 24E0      		ldi r18,lo8(4)
+  90 0088 322E      		mov r3,r18
+  91 008a 90EE      		ldi r25,lo8(12000)
+  92 008c A92E      		mov r10,r25
+  93 008e 9EE2      		ldi r25,hi8(12000)
+  94 0090 B92E      		mov r11,r25
+  95 0092 82E0      		ldi r24,lo8(2)
+  96 0094 482E      		mov r4,r24
+  97 0096 5524      		clr r5
+  98 0098 5394      		inc r5
+  99               	.L8:
+ 100 009a 8091 0000 		lds r24,Mutex
+ 101 009e 9091 0000 		lds r25,(Mutex)+1
+ 102 00a2 60E0      		ldi r22,lo8(0)
+ 103 00a4 70E0      		ldi r23,hi8(0)
+ 104 00a6 A301      		movw r20,r6
+ 105 00a8 0E94 0000 		call OSMutexPend
+ 106 00ac 8091 0000 		lds r24,FndNum
+ 107 00b0 1091 0000 		lds r17,FndNum
+ 108 00b4 0091 0000 		lds r16,FndNum
+ 109 00b8 F090 0000 		lds r15,FndNum
+ 110 00bc 8091 0000 		lds r24,Mutex
+ 111 00c0 9091 0000 		lds r25,(Mutex)+1
+ 112 00c4 0E94 0000 		call OSMutexPost
+ 113 00c8 E5BA      		out 53-32,r14
+ 114 00ca 2092 6500 		sts 101,r2
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 3
+
+
+ 115 00ce C401      		movw r24,r8
+ 116               	/* #APP */
+ 117               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 118 00d0 0197      		1: sbiw r24,1
+ 119 00d2 01F4      		brne 1b
+ 120               	 ;  0 "" 2
+ 121               	/* #NOAPP */
+ 122 00d4 812F      		mov r24,r17
+ 123 00d6 64E6      		ldi r22,lo8(100)
+ 124 00d8 0E94 0000 		call __udivmodqi4
+ 125 00dc 6AE0      		ldi r22,lo8(10)
+ 126 00de 0E94 0000 		call __udivmodqi4
+ 127 00e2 F601      		movw r30,r12
+ 128 00e4 E90F      		add r30,r25
+ 129 00e6 F11D      		adc r31,__zero_reg__
+ 130 00e8 8081      		ld r24,Z
+ 131 00ea 85BB      		out 53-32,r24
+ 132 00ec 3092 6500 		sts 101,r3
+ 133 00f0 C501      		movw r24,r10
+ 134               	/* #APP */
+ 135               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 136 00f2 0197      		1: sbiw r24,1
+ 137 00f4 01F4      		brne 1b
+ 138               	 ;  0 "" 2
+ 139               	/* #NOAPP */
+ 140 00f6 802F      		mov r24,r16
+ 141 00f8 0E94 0000 		call __udivmodqi4
+ 142 00fc 0E94 0000 		call __udivmodqi4
+ 143 0100 F601      		movw r30,r12
+ 144 0102 E90F      		add r30,r25
+ 145 0104 F11D      		adc r31,__zero_reg__
+ 146 0106 8081      		ld r24,Z
+ 147 0108 85BB      		out 53-32,r24
+ 148 010a 4092 6500 		sts 101,r4
+ 149 010e C401      		movw r24,r8
+ 150               	/* #APP */
+ 151               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 152 0110 0197      		1: sbiw r24,1
+ 153 0112 01F4      		brne 1b
+ 154               	 ;  0 "" 2
+ 155               	/* #NOAPP */
+ 156 0114 8F2D      		mov r24,r15
+ 157 0116 0E94 0000 		call __udivmodqi4
+ 158 011a F601      		movw r30,r12
+ 159 011c E90F      		add r30,r25
+ 160 011e F11D      		adc r31,__zero_reg__
+ 161 0120 8081      		ld r24,Z
+ 162 0122 85BB      		out 53-32,r24
+ 163 0124 5092 6500 		sts 101,r5
+ 164 0128 C501      		movw r24,r10
+ 165               	/* #APP */
+ 166               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 167 012a 0197      		1: sbiw r24,1
+ 168 012c 01F4      		brne 1b
+ 169               	 ;  0 "" 2
+ 170               	/* #NOAPP */
+ 171 012e 00C0      		rjmp .L8
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 4
+
+
+ 172               		.size	FndDisplayTask, .-FndDisplayTask
+ 173               	.global	FndTask
+ 174               		.type	FndTask, @function
+ 175               	FndTask:
+ 176 0130 0F93      		push r16
+ 177 0132 1F93      		push r17
+ 178 0134 DF93      		push r29
+ 179 0136 CF93      		push r28
+ 180 0138 0F92      		push __tmp_reg__
+ 181 013a CDB7      		in r28,__SP_L__
+ 182 013c DEB7      		in r29,__SP_H__
+ 183               	/* prologue: function */
+ 184               	/* frame size = 1 */
+ 185 013e 8E01      		movw r16,r28
+ 186 0140 0F5F      		subi r16,lo8(-(1))
+ 187 0142 1F4F      		sbci r17,hi8(-(1))
+ 188               	.L12:
+ 189 0144 8091 0000 		lds r24,Mbox
+ 190 0148 9091 0000 		lds r25,(Mbox)+1
+ 191 014c 60E0      		ldi r22,lo8(0)
+ 192 014e 70E0      		ldi r23,hi8(0)
+ 193 0150 A801      		movw r20,r16
+ 194 0152 0E94 0000 		call OSMboxPend
+ 195 0156 FC01      		movw r30,r24
+ 196 0158 8081      		ld r24,Z
+ 197 015a 8093 0000 		sts FndNum,r24
+ 198 015e 00C0      		rjmp .L12
+ 199               		.size	FndTask, .-FndTask
+ 200               	.global	AdcTask
+ 201               		.type	AdcTask, @function
+ 202               	AdcTask:
+ 203 0160 CF92      		push r12
+ 204 0162 DF92      		push r13
+ 205 0164 EF92      		push r14
+ 206 0166 FF92      		push r15
+ 207 0168 0F93      		push r16
+ 208 016a 1F93      		push r17
+ 209 016c DF93      		push r29
+ 210 016e CF93      		push r28
+ 211 0170 00D0      		rcall .
+ 212 0172 0F92      		push __tmp_reg__
+ 213 0174 CDB7      		in r28,__SP_L__
+ 214 0176 DEB7      		in r29,__SP_H__
+ 215               	/* prologue: function */
+ 216               	/* frame size = 3 */
+ 217 0178 17B8      		out 39-32,__zero_reg__
+ 218 017a 87E8      		ldi r24,lo8(-121)
+ 219 017c 86B9      		out 38-32,r24
+ 220 017e 80E0      		ldi r24,lo8(0)
+ 221 0180 90E0      		ldi r25,hi8(0)
+ 222 0182 0E94 0000 		call OSMboxCreate
+ 223 0186 9093 0000 		sts (Mbox)+1,r25
+ 224 018a 8093 0000 		sts Mbox,r24
+ 225 018e 80E0      		ldi r24,lo8(0)
+ 226 0190 BE01      		movw r22,r28
+ 227 0192 6F5F      		subi r22,lo8(-(1))
+ 228 0194 7F4F      		sbci r23,hi8(-(1))
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 5
+
+
+ 229 0196 0E94 0000 		call OSMutexCreate
+ 230 019a 9093 0000 		sts (Mutex)+1,r25
+ 231 019e 8093 0000 		sts Mutex,r24
+ 232 01a2 8FEF      		ldi r24,lo8(-1)
+ 233 01a4 8ABB      		out 58-32,r24
+ 234 01a6 E2E0      		ldi r30,lo8(2)
+ 235 01a8 CE2E      		mov r12,r30
+ 236 01aa D12C      		mov r13,__zero_reg__
+ 237 01ac CC0E      		add r12,r28
+ 238 01ae DD1E      		adc r13,r29
+ 239 01b0 70E1      		ldi r23,lo8(16)
+ 240 01b2 F72E      		mov r15,r23
+ 241 01b4 6AEA      		ldi r22,lo8(-86)
+ 242 01b6 E62E      		mov r14,r22
+ 243 01b8 00EA      		ldi r16,lo8(4000)
+ 244 01ba 1FE0      		ldi r17,hi8(4000)
+ 245               	.L18:
+ 246 01bc 0E94 0000 		call read_adc
+ 247 01c0 9B83      		std Y+3,r25
+ 248 01c2 8A83      		std Y+2,r24
+ 249 01c4 8091 0000 		lds r24,Mbox
+ 250 01c8 9091 0000 		lds r25,(Mbox)+1
+ 251 01cc B601      		movw r22,r12
+ 252 01ce 0E94 0000 		call OSMboxPost
+ 253 01d2 F7BA      		out 55-32,r15
+ 254 01d4 8A81      		ldd r24,Y+2
+ 255 01d6 9B81      		ldd r25,Y+3
+ 256 01d8 8756      		subi r24,lo8(871)
+ 257 01da 9340      		sbci r25,hi8(871)
+ 258 01dc 04F0      		brlt .L15
+ 259 01de 20E0      		ldi r18,lo8(0)
+ 260 01e0 30E0      		ldi r19,hi8(0)
+ 261               	.L16:
+ 262 01e2 F8BA      		out 56-32,r15
+ 263 01e4 C801      		movw r24,r16
+ 264               	/* #APP */
+ 265               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 266 01e6 0197      		1: sbiw r24,1
+ 267 01e8 01F4      		brne 1b
+ 268               	 ;  0 "" 2
+ 269               	/* #NOAPP */
+ 270 01ea 18BA      		out 56-32,__zero_reg__
+ 271 01ec C801      		movw r24,r16
+ 272               	/* #APP */
+ 273               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 274 01ee 0197      		1: sbiw r24,1
+ 275 01f0 01F4      		brne 1b
+ 276               	 ;  0 "" 2
+ 277               	/* #NOAPP */
+ 278 01f2 2F5F      		subi r18,lo8(-(1))
+ 279 01f4 3F4F      		sbci r19,hi8(-(1))
+ 280 01f6 2A30      		cpi r18,10
+ 281 01f8 3105      		cpc r19,__zero_reg__
+ 282 01fa 01F4      		brne .L16
+ 283 01fc 80E0      		ldi r24,lo8(0)
+ 284 01fe 60E0      		ldi r22,lo8(0)
+ 285 0200 41E0      		ldi r20,lo8(1)
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 6
+
+
+ 286 0202 20E0      		ldi r18,lo8(0)
+ 287 0204 30E0      		ldi r19,hi8(0)
+ 288 0206 0E94 0000 		call OSTimeDlyHMSM
+ 289 020a 00C0      		rjmp .L18
+ 290               	.L15:
+ 291 020c EBBA      		out 59-32,r14
+ 292 020e 80E0      		ldi r24,lo8(0)
+ 293 0210 60E0      		ldi r22,lo8(0)
+ 294 0212 41E0      		ldi r20,lo8(1)
+ 295 0214 20E0      		ldi r18,lo8(0)
+ 296 0216 30E0      		ldi r19,hi8(0)
+ 297 0218 0E94 0000 		call OSTimeDlyHMSM
+ 298 021c 00C0      		rjmp .L18
+ 299               		.size	AdcTask, .-AdcTask
+ 300               	.global	LedTask
+ 301               		.type	LedTask, @function
+ 302               	LedTask:
+ 303 021e 0F93      		push r16
+ 304 0220 1F93      		push r17
+ 305 0222 DF93      		push r29
+ 306 0224 CF93      		push r28
+ 307 0226 0F92      		push __tmp_reg__
+ 308 0228 CDB7      		in r28,__SP_L__
+ 309 022a DEB7      		in r29,__SP_H__
+ 310               	/* prologue: function */
+ 311               	/* frame size = 1 */
+ 312 022c 8091 0000 		lds r24,sync
+ 313 0230 9091 0000 		lds r25,(sync)+1
+ 314 0234 63E0      		ldi r22,lo8(3)
+ 315 0236 43E8      		ldi r20,lo8(-125)
+ 316 0238 20E0      		ldi r18,lo8(0)
+ 317 023a 30E0      		ldi r19,hi8(0)
+ 318 023c 8E01      		movw r16,r28
+ 319 023e 0F5F      		subi r16,lo8(-(1))
+ 320 0240 1F4F      		sbci r17,hi8(-(1))
+ 321 0242 0E94 0000 		call OSFlagPend
+ 322 0246 8091 0000 		lds r24,chk
+ 323 024a 8130      		cpi r24,lo8(1)
+ 324 024c 01F0      		breq .L29
+ 325 024e 8091 0000 		lds r24,chk
+ 326 0252 8230      		cpi r24,lo8(2)
+ 327 0254 01F0      		breq .L30
+ 328               	/* epilogue start */
+ 329 0256 0F90      		pop __tmp_reg__
+ 330 0258 CF91      		pop r28
+ 331 025a DF91      		pop r29
+ 332 025c 1F91      		pop r17
+ 333 025e 0F91      		pop r16
+ 334 0260 0895      		ret
+ 335               	.L30:
+ 336 0262 1BBA      		out 59-32,__zero_reg__
+ 337 0264 28EE      		ldi r18,lo8(1000)
+ 338 0266 33E0      		ldi r19,hi8(1000)
+ 339 0268 40E9      		ldi r20,lo8(400)
+ 340 026a 51E0      		ldi r21,hi8(400)
+ 341               	.L25:
+ 342 026c CA01      		movw r24,r20
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 7
+
+
+ 343               	/* #APP */
+ 344               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 345 026e 0197      		1: sbiw r24,1
+ 346 0270 01F4      		brne 1b
+ 347               	 ;  0 "" 2
+ 348               	/* #NOAPP */
+ 349 0272 2150      		subi r18,lo8(-(-1))
+ 350 0274 3040      		sbci r19,hi8(-(-1))
+ 351 0276 01F4      		brne .L25
+ 352 0278 0F90      		pop __tmp_reg__
+ 353 027a CF91      		pop r28
+ 354 027c DF91      		pop r29
+ 355 027e 1F91      		pop r17
+ 356 0280 0F91      		pop r16
+ 357 0282 0895      		ret
+ 358               	.L29:
+ 359 0284 8FEF      		ldi r24,lo8(-1)
+ 360 0286 8BBB      		out 59-32,r24
+ 361 0288 28EE      		ldi r18,lo8(1000)
+ 362 028a 33E0      		ldi r19,hi8(1000)
+ 363 028c 40E9      		ldi r20,lo8(400)
+ 364 028e 51E0      		ldi r21,hi8(400)
+ 365               	.L23:
+ 366 0290 CA01      		movw r24,r20
+ 367               	/* #APP */
+ 368               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 369 0292 0197      		1: sbiw r24,1
+ 370 0294 01F4      		brne 1b
+ 371               	 ;  0 "" 2
+ 372               	/* #NOAPP */
+ 373 0296 2150      		subi r18,lo8(-(-1))
+ 374 0298 3040      		sbci r19,hi8(-(-1))
+ 375 029a 01F4      		brne .L23
+ 376 029c 0F90      		pop __tmp_reg__
+ 377 029e CF91      		pop r28
+ 378 02a0 DF91      		pop r29
+ 379 02a2 1F91      		pop r17
+ 380 02a4 0F91      		pop r16
+ 381 02a6 0895      		ret
+ 382               		.size	LedTask, .-LedTask
+ 383               	.global	main
+ 384               		.type	main, @function
+ 385               	main:
+ 386 02a8 DF93      		push r29
+ 387 02aa CF93      		push r28
+ 388 02ac 0F92      		push __tmp_reg__
+ 389 02ae CDB7      		in r28,__SP_L__
+ 390 02b0 DEB7      		in r29,__SP_H__
+ 391               	/* prologue: function */
+ 392               	/* frame size = 1 */
+ 393 02b2 0E94 0000 		call OSInit
+ 394               	/* #APP */
+ 395               	 ;  53 "lab2.c" 1
+ 396 02b6 F894      		cli
+ 397               	 ;  0 "" 2
+ 398               	/* #NOAPP */
+ 399 02b8 87E0      		ldi r24,lo8(7)
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 8
+
+
+ 400 02ba 83BF      		out 83-32,r24
+ 401 02bc 81E0      		ldi r24,lo8(1)
+ 402 02be 87BF      		out 87-32,r24
+ 403 02c0 84E6      		ldi r24,lo8(100)
+ 404 02c2 82BF      		out 82-32,r24
+ 405               	/* #APP */
+ 406               	 ;  57 "lab2.c" 1
+ 407 02c4 7894      		sei
+ 408               	 ;  0 "" 2
+ 409               	/* #NOAPP */
+ 410 02c6 80E3      		ldi r24,lo8(48)
+ 411 02c8 89BF      		out 89-32,r24
+ 412 02ca 8FB7      		in r24,__SREG__
+ 413 02cc 8068      		ori r24,lo8(-128)
+ 414 02ce 8FBF      		out __SREG__,r24
+ 415 02d0 8FEC      		ldi r24,lo8(-49)
+ 416 02d2 82B9      		out 34-32,r24
+ 417 02d4 8AE0      		ldi r24,lo8(10)
+ 418 02d6 8ABF      		out 90-32,r24
+ 419 02d8 80E0      		ldi r24,lo8(0)
+ 420 02da BE01      		movw r22,r28
+ 421 02dc 6F5F      		subi r22,lo8(-(1))
+ 422 02de 7F4F      		sbci r23,hi8(-(1))
+ 423 02e0 0E94 0000 		call OSFlagCreate
+ 424 02e4 9093 0000 		sts (sync)+1,r25
+ 425 02e8 8093 0000 		sts sync,r24
+ 426 02ec 80E0      		ldi r24,lo8(gs(AdcTask))
+ 427 02ee 90E0      		ldi r25,hi8(gs(AdcTask))
+ 428 02f0 60E0      		ldi r22,lo8(0)
+ 429 02f2 70E0      		ldi r23,hi8(0)
+ 430 02f4 40E0      		ldi r20,lo8(TaskStk+127)
+ 431 02f6 50E0      		ldi r21,hi8(TaskStk+127)
+ 432 02f8 21E0      		ldi r18,lo8(1)
+ 433 02fa 0E94 0000 		call OSTaskCreate
+ 434 02fe 80E0      		ldi r24,lo8(gs(LedTask))
+ 435 0300 90E0      		ldi r25,hi8(gs(LedTask))
+ 436 0302 60E0      		ldi r22,lo8(0)
+ 437 0304 70E0      		ldi r23,hi8(0)
+ 438 0306 40E0      		ldi r20,lo8(TaskStk+255)
+ 439 0308 50E0      		ldi r21,hi8(TaskStk+255)
+ 440 030a 22E0      		ldi r18,lo8(2)
+ 441 030c 0E94 0000 		call OSTaskCreate
+ 442 0310 80E0      		ldi r24,lo8(gs(FndTask))
+ 443 0312 90E0      		ldi r25,hi8(gs(FndTask))
+ 444 0314 60E0      		ldi r22,lo8(0)
+ 445 0316 70E0      		ldi r23,hi8(0)
+ 446 0318 40E0      		ldi r20,lo8(TaskStk+383)
+ 447 031a 50E0      		ldi r21,hi8(TaskStk+383)
+ 448 031c 23E0      		ldi r18,lo8(3)
+ 449 031e 0E94 0000 		call OSTaskCreate
+ 450 0322 80E0      		ldi r24,lo8(gs(FndDisplayTask))
+ 451 0324 90E0      		ldi r25,hi8(gs(FndDisplayTask))
+ 452 0326 60E0      		ldi r22,lo8(0)
+ 453 0328 70E0      		ldi r23,hi8(0)
+ 454 032a 40E0      		ldi r20,lo8(TaskStk+511)
+ 455 032c 50E0      		ldi r21,hi8(TaskStk+511)
+ 456 032e 24E0      		ldi r18,lo8(4)
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 9
+
+
+ 457 0330 0E94 0000 		call OSTaskCreate
+ 458 0334 0E94 0000 		call OSStart
+ 459 0338 80E0      		ldi r24,lo8(0)
+ 460 033a 90E0      		ldi r25,hi8(0)
+ 461               	/* epilogue start */
+ 462 033c 0F90      		pop __tmp_reg__
+ 463 033e CF91      		pop r28
+ 464 0340 DF91      		pop r29
+ 465 0342 0895      		ret
+ 466               		.size	main, .-main
+ 467               	.global	__vector_6
+ 468               		.type	__vector_6, @function
+ 469               	__vector_6:
+ 470 0344 1F92      		push __zero_reg__
+ 471 0346 0F92      		push r0
+ 472 0348 0FB6      		in r0,__SREG__
+ 473 034a 0F92      		push r0
+ 474 034c 0BB6      		in r0,91-32
+ 475 034e 0F92      		push r0
+ 476 0350 1124      		clr __zero_reg__
+ 477 0352 2F93      		push r18
+ 478 0354 3F93      		push r19
+ 479 0356 4F93      		push r20
+ 480 0358 5F93      		push r21
+ 481 035a 6F93      		push r22
+ 482 035c 7F93      		push r23
+ 483 035e 8F93      		push r24
+ 484 0360 9F93      		push r25
+ 485 0362 AF93      		push r26
+ 486 0364 BF93      		push r27
+ 487 0366 EF93      		push r30
+ 488 0368 FF93      		push r31
+ 489 036a DF93      		push r29
+ 490 036c CF93      		push r28
+ 491 036e 0F92      		push __tmp_reg__
+ 492 0370 CDB7      		in r28,__SP_L__
+ 493 0372 DEB7      		in r29,__SP_H__
+ 494               	/* prologue: Signal */
+ 495               	/* frame size = 1 */
+ 496 0374 15BA      		out 53-32,__zero_reg__
+ 497 0376 28EE      		ldi r18,lo8(1000)
+ 498 0378 33E0      		ldi r19,hi8(1000)
+ 499 037a 40E9      		ldi r20,lo8(400)
+ 500 037c 51E0      		ldi r21,hi8(400)
+ 501               	.L34:
+ 502 037e CA01      		movw r24,r20
+ 503               	/* #APP */
+ 504               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 505 0380 0197      		1: sbiw r24,1
+ 506 0382 01F4      		brne 1b
+ 507               	 ;  0 "" 2
+ 508               	/* #NOAPP */
+ 509 0384 2150      		subi r18,lo8(-(-1))
+ 510 0386 3040      		sbci r19,hi8(-(-1))
+ 511 0388 01F4      		brne .L34
+ 512 038a 82E0      		ldi r24,lo8(2)
+ 513 038c 8093 0000 		sts chk,r24
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 10
+
+
+ 514 0390 8091 0000 		lds r24,sync
+ 515 0394 9091 0000 		lds r25,(sync)+1
+ 516 0398 62E0      		ldi r22,lo8(2)
+ 517 039a 41E0      		ldi r20,lo8(1)
+ 518 039c 9E01      		movw r18,r28
+ 519 039e 2F5F      		subi r18,lo8(-(1))
+ 520 03a0 3F4F      		sbci r19,hi8(-(1))
+ 521 03a2 0E94 0000 		call OSFlagPost
+ 522               	/* epilogue start */
+ 523 03a6 0F90      		pop __tmp_reg__
+ 524 03a8 CF91      		pop r28
+ 525 03aa DF91      		pop r29
+ 526 03ac FF91      		pop r31
+ 527 03ae EF91      		pop r30
+ 528 03b0 BF91      		pop r27
+ 529 03b2 AF91      		pop r26
+ 530 03b4 9F91      		pop r25
+ 531 03b6 8F91      		pop r24
+ 532 03b8 7F91      		pop r23
+ 533 03ba 6F91      		pop r22
+ 534 03bc 5F91      		pop r21
+ 535 03be 4F91      		pop r20
+ 536 03c0 3F91      		pop r19
+ 537 03c2 2F91      		pop r18
+ 538 03c4 0F90      		pop r0
+ 539 03c6 0BBE      		out 91-32,r0
+ 540 03c8 0F90      		pop r0
+ 541 03ca 0FBE      		out __SREG__,r0
+ 542 03cc 0F90      		pop r0
+ 543 03ce 1F90      		pop __zero_reg__
+ 544 03d0 1895      		reti
+ 545               		.size	__vector_6, .-__vector_6
+ 546               	.global	__vector_5
+ 547               		.type	__vector_5, @function
+ 548               	__vector_5:
+ 549 03d2 1F92      		push __zero_reg__
+ 550 03d4 0F92      		push r0
+ 551 03d6 0FB6      		in r0,__SREG__
+ 552 03d8 0F92      		push r0
+ 553 03da 0BB6      		in r0,91-32
+ 554 03dc 0F92      		push r0
+ 555 03de 1124      		clr __zero_reg__
+ 556 03e0 2F93      		push r18
+ 557 03e2 3F93      		push r19
+ 558 03e4 4F93      		push r20
+ 559 03e6 5F93      		push r21
+ 560 03e8 6F93      		push r22
+ 561 03ea 7F93      		push r23
+ 562 03ec 8F93      		push r24
+ 563 03ee 9F93      		push r25
+ 564 03f0 AF93      		push r26
+ 565 03f2 BF93      		push r27
+ 566 03f4 EF93      		push r30
+ 567 03f6 FF93      		push r31
+ 568 03f8 DF93      		push r29
+ 569 03fa CF93      		push r28
+ 570 03fc 0F92      		push __tmp_reg__
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 11
+
+
+ 571 03fe CDB7      		in r28,__SP_L__
+ 572 0400 DEB7      		in r29,__SP_H__
+ 573               	/* prologue: Signal */
+ 574               	/* frame size = 1 */
+ 575 0402 15BA      		out 53-32,__zero_reg__
+ 576 0404 28EE      		ldi r18,lo8(1000)
+ 577 0406 33E0      		ldi r19,hi8(1000)
+ 578 0408 40E9      		ldi r20,lo8(400)
+ 579 040a 51E0      		ldi r21,hi8(400)
+ 580               	.L38:
+ 581 040c CA01      		movw r24,r20
+ 582               	/* #APP */
+ 583               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 584 040e 0197      		1: sbiw r24,1
+ 585 0410 01F4      		brne 1b
+ 586               	 ;  0 "" 2
+ 587               	/* #NOAPP */
+ 588 0412 2150      		subi r18,lo8(-(-1))
+ 589 0414 3040      		sbci r19,hi8(-(-1))
+ 590 0416 01F4      		brne .L38
+ 591 0418 81E0      		ldi r24,lo8(1)
+ 592 041a 8093 0000 		sts chk,r24
+ 593 041e 8091 0000 		lds r24,sync
+ 594 0422 9091 0000 		lds r25,(sync)+1
+ 595 0426 61E0      		ldi r22,lo8(1)
+ 596 0428 41E0      		ldi r20,lo8(1)
+ 597 042a 9E01      		movw r18,r28
+ 598 042c 2F5F      		subi r18,lo8(-(1))
+ 599 042e 3F4F      		sbci r19,hi8(-(1))
+ 600 0430 0E94 0000 		call OSFlagPost
+ 601               	/* epilogue start */
+ 602 0434 0F90      		pop __tmp_reg__
+ 603 0436 CF91      		pop r28
+ 604 0438 DF91      		pop r29
+ 605 043a FF91      		pop r31
+ 606 043c EF91      		pop r30
+ 607 043e BF91      		pop r27
+ 608 0440 AF91      		pop r26
+ 609 0442 9F91      		pop r25
+ 610 0444 8F91      		pop r24
+ 611 0446 7F91      		pop r23
+ 612 0448 6F91      		pop r22
+ 613 044a 5F91      		pop r21
+ 614 044c 4F91      		pop r20
+ 615 044e 3F91      		pop r19
+ 616 0450 2F91      		pop r18
+ 617 0452 0F90      		pop r0
+ 618 0454 0BBE      		out 91-32,r0
+ 619 0456 0F90      		pop r0
+ 620 0458 0FBE      		out __SREG__,r0
+ 621 045a 0F90      		pop r0
+ 622 045c 1F90      		pop __zero_reg__
+ 623 045e 1895      		reti
+ 624               		.size	__vector_5, .-__vector_5
+ 625               	.global	state
+ 626               	.global	state
+ 627               		.section .bss
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 12
+
+
+ 628               		.type	state, @object
+ 629               		.size	state, 2
+ 630               	state:
+ 631 0000 0000      		.skip 2,0
+ 632               		.data
+ 633               		.type	C.14.1667, @object
+ 634               		.size	C.14.1667, 19
+ 635               	C.14.1667:
+ 636 0000 3F        		.byte	63
+ 637 0001 06        		.byte	6
+ 638 0002 5B        		.byte	91
+ 639 0003 4F        		.byte	79
+ 640 0004 66        		.byte	102
+ 641 0005 6D        		.byte	109
+ 642 0006 7D        		.byte	125
+ 643 0007 27        		.byte	39
+ 644 0008 7F        		.byte	127
+ 645 0009 6F        		.byte	111
+ 646 000a 77        		.byte	119
+ 647 000b 7C        		.byte	124
+ 648 000c 39        		.byte	57
+ 649 000d 5E        		.byte	94
+ 650 000e 79        		.byte	121
+ 651 000f 71        		.byte	113
+ 652 0010 80        		.byte	-128
+ 653 0011 40        		.byte	64
+ 654 0012 08        		.byte	8
+ 655               		.comm TaskStk,512,1
+ 656               		.comm sync,2,1
+ 657               		.comm Mbox,2,1
+ 658               		.comm Mutex,2,1
+ 659               		.comm FndNum,1,1
+ 660               		.comm chk,1,1
+ 661               	.global __do_copy_data
+ 662               	.global __do_clear_bss
+GAS LISTING C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lab2.c
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:2      *ABS*:0000003f __SREG__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:3      *ABS*:0000003e __SP_H__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:4      *ABS*:0000003d __SP_L__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:5      *ABS*:00000034 __CCP__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:11     .text:00000000 read_adc
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:31     .text:00000018 FndDisplayTask
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:635    .data:00000000 C.14.1667
+                            *COM*:00000002 Mutex
+                            *COM*:00000001 FndNum
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:175    .text:00000130 FndTask
+                            *COM*:00000002 Mbox
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:202    .text:00000160 AdcTask
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:302    .text:0000021e LedTask
+                            *COM*:00000002 sync
+                            *COM*:00000001 chk
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:385    .text:000002a8 main
+                            *COM*:00000200 TaskStk
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:469    .text:00000344 __vector_6
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:548    .text:000003d2 __vector_5
+C:\Users\KIMNAN~2\AppData\Local\Temp/cc5WdinD.s:630    .bss:00000000 state
+
+UNDEFINED SYMBOLS
+OSMutexPend
+OSMutexPost
+__udivmodqi4
+OSMboxPend
+OSMboxCreate
+OSMutexCreate
+OSMboxPost
+OSTimeDlyHMSM
+OSFlagPend
+OSInit
+OSFlagCreate
+OSTaskCreate
+OSStart
+OSFlagPost
+__do_copy_data
+__do_clear_bss
